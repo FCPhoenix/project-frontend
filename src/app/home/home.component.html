@@ -1,0 +1,431 @@
+
+<div class="modal-box" id="calendars">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+        <div class="close-box">
+          <a href="#" class="close-box-button">
+            <img src="assets/img/gdpr-close.png">
+          </a>
+        </div>
+        <div class="box">
+          <div class="modal-box-header">
+            Add to Calendar
+          </div>
+          <div class="modal-box-body">
+            <ul class="calendars-list">
+              <li>
+                <a href="https://outlook.live.com/owa/?rru=addevent&startdt={{selectedEvent.cstart}}&enddt={{selectedEvent.cend}}&subject={{selectedEvent.title}}&location={{selectedEvent.address.city}}, {{selectedEvent.address.country}}&body=&allday=false&uid=1533951710208_805441068221&path=/calendar/vie"
+                  target="_blank">
+                  <img src="assets/img/icons/004-outlook.png"> Outlook Calendar</a>
+              </li>
+              <li>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates={{selectedEvent.cstart}}/{{selectedEvent.cend}}&location={{selectedEvent.address.city}}, {{selectedEvent.address.country}}&text={{selectedEvent.title}}&details={{selectedEvent.description.text}}"
+                  target="_blank">
+                  <img src="assets/img/icons/003-google.png"> Google Calendar</a>
+              </li>
+              <li>
+                <a (click)="appleCalender($event)" target="_blank">
+                  <img src="assets/img/icons/002-apple.png"> Apple Calendar</a>
+              </li>
+              <li>
+                <a href="https://calendar.yahoo.com/?v=60&view=d&type=20&title={{selectedEvent.title}}&st={{selectedEvent.cstart}}&dur={{selectedEvent.duration}}&desc={{selectedEvent.title}}&in_loc={{selectedEvent.address.city}}, {{selectedEvent.address.country}}"
+                  target="_blank">
+                  <img src="assets/img/icons/001-yahoo-logo.png"> Yahoo Calendar</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="visible-xs filters-option" (click)="opneFilterPopUp()">
+  <a class="btn btn-primary">
+    <img src="assets/img/filter-24.png">
+  </a>
+</div>
+
+<div #filters class="top-filters" [ngStyle]="popUPFilterMobile == true ? {'visibility': 'visible', 'opacity': '1'}  : {}">
+  <div class="container">
+    <div class="visible-xs">
+      <a class="pull-left reset-filters" (click)="removeAllFilter()">Reset Filters</a>
+      <a (click)="closeFilterPopUp()" class="pull-right close-filters">
+        <img src="assets/img/gdpr-close.png">
+      </a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="filter {{type ? 'active' : ''}}">
+      <div class="toggler">
+        <span>{{type ? type : 'Any type'}}</span>
+        <img (click)="removeFilter('type', 'Any type')" src="assets/img/gdpr-close.png" class="remove" data-text="Any type">
+      </div>
+      <div class="more">
+        <ul>
+          <li>
+            <a (click)="changeFilter($event)" data-type="type" data-value="any">Any type</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="type" data-value="meeting">Meeting</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="type" data-value="conference">Conference</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="type" data-value="webinar">Webinar</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="type" data-value="other">Other</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="filter {{format ? 'active' : ''}}">
+      <div class="toggler">
+        <span>{{format ? format : 'Any format'}}</span>
+        <img (click)="removeFilter('format', 'Any format')" src="assets/img/gdpr-close.png" class="remove" data-text="Any format">
+      </div>
+      <div class="more">
+        <ul>
+          <li>
+            <a (click)="changeFilter($event)" data-type="format" data-value="any">Any format</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="format" data-value="online">Online</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="format" data-value="offline">Offline</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="filter {{distance1 ? 'active' : ''}}">
+      <div class="toggler">
+        <span>Distance</span>
+        <img (click)="removeFilter('distance', '1')" src="assets/img/gdpr-close.png" class="remove">
+      </div>
+      <div class="more v2">
+        <div class="form-group">
+          <label style="display: block;">Distance Radius
+            <b id="distance" class="pull-right" style="color:#eb4a52;">{{distance || '25'}}km</b>
+          </label>
+          <input type="range" typeaheadWaitMs="1000" [(ngModel)]="distance" data-type="distance" data-value="distance" min="1" max="50"
+            id="distanceInput">
+          <div class="pull-left">1km</div>
+          <div class="pull-right">50km</div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="form-group">
+          <label>Your location</label>
+          <input type="text" class="form-control" value="{{location.lat || ''}},{{location.long || ''}}">
+        </div>
+        <a (click)="changeFilter($event)" data-type="distance" class="btn btn-primary">Save changes</a>
+      </div>
+    </div>
+    <div class="filter {{day ? 'active' : ''}}">
+      <div class="toggler">
+        <span>{{day ? day : 'Today'}}</span>
+        <img (click)="removeFilter('day', 'Today')" src="assets/img/gdpr-close.png" class="remove" data-text="Today">
+      </div>
+      <div class="more">
+        <ul>
+          <li>
+            <a (click)="changeFilter($event)" data-type="day" data-value="today">Today</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="day" data-value="thisweek">This Week</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="day" data-value="thismonth">This Month</a>
+          </li>
+          <li>
+            <a (click)="changeFilter($event)" data-type="day" data-value="any">All Time</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="filter">
+      <div class="toggler">
+        <span>Subject</span>
+      </div>
+      <div class="more">
+        <div class="checkbox">
+          <label>
+            <input (click)="changeFilter($event)" data-type="subject" type="checkbox" value="*"> All subjects
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" (click)="changeFilter($event)" data-type="subject" value="Big Data"> Big Data
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" (click)="changeFilter($event)" data-type="subject" value="AI"> AI
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" (click)="changeFilter($event)" data-type="subject" value="Programming"> Programming
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" (click)="changeFilter($event)" data-type="subject" value="CMS"> CMS
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="pull-right hidden-xs">
+      <div class="switcher">
+        <a href="#">
+          <img src="assets/img/001-menu.png">
+        </a>
+        <a href="#" class="active">
+          <img src="assets/img/002-four-squares.png">
+        </a>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div #eventpage class="events" ng-if="loadingMore">
+  <div class="loading {{loading ? 'show' : 'hide'}}">
+    <div class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+    <h1>Loading</h1>
+    <p>Please wait, we are gathering events.</p>
+  </div>
+  <div class="container" infinite-scroll [infiniteScrollDistance]="0.3" [infiniteScrollThrottle]="1300" (scrolled)="onScrollDown()">
+    <div class="row">
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        <div class="col-md-4 col-xs-12  col-sm-6 event" *ngFor="let event of eventList" (mouseover)="eventHover($event, event.id)"
+          (mouseleave)="eventHoverStop($event,event.id)">
+          <div class="image" (click)="openPopUp(event.id)" [ngStyle]=" event.image == null ? { 'background-image': 'url(assets/img/no-image.png)'}  : { 'background-image': 'url(' + event.image + ')'}"
+            style='background-position: center;background-size: cover;background-repeat: no-repeat;'>
+            <div id="map{{event.id}}" class="map-image" style="overflow: hidden"></div>
+            <div class="details">
+              <ul class="pull-left">
+                <li>
+                  <img src="assets/img/icons/002-man-user.png">
+                  <span>
+                    <b>{{event.going != undefined ? event.going : 'N/A'}}</b>
+                    People Going
+                  </span>
+                </li>
+              </ul>
+              <ul class="pull-right">
+                <li>
+                  <span>
+                    <b>{{event.isFree ? 'Free' : ( event.price.min ? '$' + event.price.min : 'NA')}}</b>
+                    Ticket Price
+                  </span>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="meta">
+            <a href="#" class="title">{{event.title}}</a>
+            <div class="date">
+              <img src="assets/img/icons/001-calendar-with-a-clock-time-tools.png"> {{event.start == null ? 'Coming Soon' : (event.start | date ) }} {{event.start == null ? '' :(event.start
+              | date :'hh:mm a')}}</div>
+            <p>{{event.description.text != null ? event.description.text.trim() : ''}}</p>
+          </div>
+          <div class="buttons">
+            <a href="{{event.url}}" target="_blank" class="register">Register</a>
+            <a (click)="openPopUp(event.id)" class="readmore">Read more</a>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="noEvents {{(eventList == null && loading == false && loadingMore == false) ? 'show' : 'hide'}}">
+          <div class="col-md-12 text-center">
+            <h1>No Events</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="inline-loading {{loadingMore ? 'show' : 'hide'}}">
+  <div class="loading">
+    <div class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+    <h1>Auto Loading</h1>
+    <p>Please wait, we are gathering events.</p>
+  </div>
+</div>
+<div class="nice-box" [ngStyle]="popUP == true ? {'visibility': 'visible', 'opacity': '1'}  : {}">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <a (click)="closePopUp()" class="close-it"></a>
+        <div class="box">
+          <div class="event-main">
+            <h1>{{selectedEvent.title || 'NA' }}</h1>
+            <div class="stats-top-items">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="icon">
+                    <img src="assets/img/icons/003-location-pin.png">
+                  </div>
+                  <!--
+                                 -->
+                  <div class="text">
+                    <b>{{selectedEvent.address ? selectedEvent.address.name : '' }} {{selectedEvent.address ? selectedEvent.address.line1
+                      : ''}} {{selectedEvent.address ? selectedEvent.address.line2 : ''}}</b>
+                    <b>{{selectedEvent.address ? selectedEvent.address.state : ''}} {{selectedEvent.address ? selectedEvent.address.country
+                      : ''}}</b>
+                    <b>{{selectedEvent.format == 'online' ? 'Online Event' : ''}}</b>
+                    <span>Event Address</span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="icon">
+                    <img src="assets/img/icons/001-calendar-with-a-clock-time-tools.png">
+                  </div>
+                  <!--
+                                 -->
+                  <div class="text">
+                    <b> {{selectedEvent.start | date }} {{selectedEvent.start | date :'hh:mm a'}} -
+                      <br>{{selectedEvent.end == null ? 'NA' : (selectedEvent.end | date )}} {{selectedEvent.end == null ? ''
+                      : (selectedEvent.end | date :'hh:mm a')}} </b>
+                    <span>Date and time</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--
+                 -->
+          <div class="event-details">
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="detail">
+                  <h2>Event Details</h2>
+                  {{selectedEvent.description.text || 'NA'}}
+                </div>
+                <div class="detail map-area {{selectedEvent.format == 'online' ? 'hide' : ''}}">
+                  <h2>How to get there?</h2>
+                  <div #eventmap id="google-map"></div>
+                </div>
+                <div class="detail {{selectedEvent.format == 'online' ? 'hide' : ''}}">
+                  <h2>Nearest MRT</h2>
+                  <p>{{selectedEvent.nearestStation || 'NA'}}</p>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="side-details" style="margin-bottom: 8px;">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="detail">
+                        <h2>Ticket Price</h2>
+                        <p>{{selectedEvent.isFree ? 'Free': (selectedEvent.price.min || 'NA')}}</p>
+                      </div>
+                      <span></span>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="detail">
+                        <h2>People Going</h2>
+                        <p>{{selectedEvent.going || 'NA' }}</p>
+                      </div>
+                      <span></span>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="detail">
+                        <h2>Website</h2>
+                        <p>
+                          <a href="{{selectedEvent.website}}">{{selectedEvent.website}}</a>
+                        </p>
+                      </div>
+                      <span></span>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="detail">
+                        <h2>Facebook Page</h2>
+                        <p>
+                          <a href="{{selectedEvent.fbPage ? ('https://facebook.com/'+ selectedEvent.fbPage) : selectedEvent.fbPage}}">{{selectedEvent.fbPage !=null ? 'https://facebook.com/' +selectedEvent.fbPage : ''}}</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <a href="#" class="btn btn-empty">
+                  <img src="assets/img/icons/save-button.png">
+                </a>
+                <a href="#" class="btn btn-empty" data-toggle="custom-modal-box" data-target="#calendars">
+                  <img src="assets/img/icons/001-calendar-with-a-clock-time-tools.png">
+                </a>
+                <div style="position: relative;width:24px;height:24px;display: inline-block;vertical-align: middle;">
+                  <div id="menu">
+                    <div id="share">
+                    </div>
+                    <a href="https://www.facebook.com/sharer/sharer.php?&u=https://ste-web.herokuapp.com" target="_blank">
+                      <div class="ico1">
+                      </div>
+                    </a>
+                    <a href="http://digg.com/submit?url=https://ste-web.herokuapp.com&title={{selectedEvent.title}}" target="_blank">
+                      <div class="ico2">
+                      </div>
+                    </a>
+                    <a href="https://twitter.com/home?status={{selectedEvent.title}} Visit: https://ste-web.herokuapp.com" target="_blank">
+                      <div class="ico3">
+                      </div>
+                    </a>
+                    <a href="http://pinterest.com/pin/create/button/?url=https://ste-web.herokuapp.com&media={{selectedEvent.image}}&description={{selectedEvent.title}}"
+                      target="_blank">
+                      <div class="ico4">
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <!--<div class="share-buttons">
+                                    <a href="#" class="share-button">
+                                        <img src="assets/img/icons/003-facebook-logo.png"> Share on Facebook
+                                    </a>
+                                    <a href="#" class="share-button">
+                                        <img src="assets/img/icons/002-twitter-logo-silhouette.png"> Share on Twitter
+                                    </a>
+                                    <a href="#" class="share-button visible-xs">
+                                        <img src="assets/img/icons/whatsapp.png"> Share on Whatsapp
+                                    </a>
+                                    <a href="#" class="share-button">
+                                        <img src="assets/img/icons/001-mail-black-envelope-symbol.png"> Tell a Friend
+                                    </a>
+                                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="gdpr {{showCookieBar ? 'show' : 'hide'}}">
+  <div class="container">
+    <p>STE, and certain approved third parties, use functional, analytical and tracking cookies (or similar technologies) to
+      understand your event preferences and provide you with a customized experience. By closing this banner or continuing
+      to use STE, you agree. For more information, please review our
+      <a href="cookie">cookie policy</a>.</p>
+    <!--
+                 -->
+    <a (click)="hidegdpr()" class="close-gdpr">
+      <img src="assets/img/gdpr-close.png">
+    </a>
+  </div>
+</div>
+
+<app-footer></app-footer>

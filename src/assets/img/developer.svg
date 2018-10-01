@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>developer</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="1" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.07 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M46.0458966,46.0458812 C43.4404254,48.6513729 39.216304,48.6513729 36.6108328,46.0458812 C35.3302254,44.7652637 34.681447,43.0938694 34.6607313,41.4158838 C34.6494319,40.4817863 34.2115771,39.603245 33.5505577,38.943162 L15.367815,20.7593344 C14.3000144,19.6915254 12.6888972,19.2602586 11.2887036,19.8280618 C9.22372412,20.666113 6.76797099,20.2470874 5.09376507,18.5719267 L4.41956291,17.8986608 L0.626704941,13.157551 C-0.283844625,12.0191197 -0.192507181,10.3797409 0.837628522,9.34959705 L2.39789805,7.78931523 L6.71900659,12.1104578 C9.62297232,12.0370106 12.037294,9.62361154 12.109799,6.71868129 L7.78869047,2.3975387 L9.34895999,0.837256879 C10.3790957,-0.192886942 12.0194032,-0.283283475 13.1568839,0.626331636 L17.8979564,4.41921949 L18.5721585,5.09342696 C20.2463645,6.76858771 20.6653868,9.22341855 19.8282838,11.289356 C19.2604851,12.688619 19.6917484,14.2997488 20.7595491,15.3684995 L38.9422917,33.5513854 C39.6033111,34.2114685 40.4809039,34.6493267 41.414994,34.6615679 C43.0939081,34.6822837 44.7652891,35.3301255 46.0458966,36.6107431 C48.6513678,39.2162348 48.6513678,43.4403895 46.0458966,46.0458812 Z M39.3707225,39.2999256 C38.2673815,40.4032753 38.2673815,42.1922648 39.3707225,43.2946842 C40.4731332,44.398034 42.2621087,44.398034 43.3654497,43.2946842 C44.4687908,42.1922648 44.4687908,40.4032753 43.3654497,39.2999256 C42.2621087,38.1965758 40.4731332,38.1965758 39.3707225,39.2999256 L39.3707225,39.2999256 Z" id="path-2"></path>
+    </defs>
+    <g id="Signup-+-Account-Settings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="developer" sketch:type="MSArtboardGroup">
+            <g id="Icon-FrontEnd-4-+-Hand-Tool-2" sketch:type="MSLayerGroup" transform="translate(25.000000, 25.000000)">
+                <g id="Hand-Tool-2">
+                    <mask id="mask-3" sketch:name="Hand Tool 2" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use fill="#EAEEF0" filter="url(#filter-1)" sketch:type="MSShapeGroup" xlink:href="#path-2"></use>
+                    <path d="M-4.10351562,-4.60351562 L53.0898438,0.435546875 L49.3847656,49.125 L-4.10351562,-4.60351562 Z" id="Rectangle-73" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-3)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

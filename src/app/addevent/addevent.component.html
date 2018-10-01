@@ -1,0 +1,119 @@
+<div class="main">
+  <mat-toolbar color="primary">Create an Event</mat-toolbar>
+    <mat-card color="warn" style="height:3em; text-align:center; ">
+      All field marked(*) are mandatory
+    </mat-card>
+    <mat-card>
+
+  <form #eventForm="ngForm" (ngSubmit)="onSubmit()" class="normal-form">
+
+    <mat-grid-list cols="2" rowHeight="300px">
+    <mat-form-field class="field">
+      <input matInput type="text" class="browser-default"
+        #yourname
+          placeholder="name"
+           name="name" [(ngModel)]="eventContent.name"
+            value="" requied>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+          Your name is required
+              </mat-error>
+    </mat-form-field>
+    <mat-form-field class="field">
+        <input matInput type="email" class="browser-default"
+          #email
+             placeholder="Email"
+               name="email" [(ngModel)]="eventContent.email"
+                value="" requied>
+                  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email
+                  </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Your email is required
+                    </mat-error>
+    </mat-form-field>
+    <mat-form-field class="field">
+      <input matInput type="tel" class="browser-default" color="accent"
+        #contact
+          placeholder="Contact"
+           name="contact" [(ngModel)]="eventContent.contact"
+            value="" requied>
+              <mat-error *ngIf="emailFormControl.hasError('required')" >
+          Your contact is required
+              </mat-error>
+    </mat-form-field>
+    <mat-form-field class="field">
+      <input matInput type="text" class="browser-default"
+        placeholder="Event Name"
+         name="eventName"
+          value="" requied>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Event Name is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="field">
+        <input matInput type="text" class="browser-default"
+          #eventName
+            placeholder="Event Description"
+             name="eventDescription" [(ngModel)]="eventContent.eventName"
+              value="" requied>
+                <mat-error *ngIf="emailFormControl.hasError('required')" >
+          Event Description is required
+              </mat-error>
+    </mat-form-field>
+    <mat-form-field class="field">
+      <input type="datetime-local" class="browser-default"  matInput
+         #dateTime
+          name="date_and_time"  [(ngModel)]="eventContent.date_and_time"
+           placeholder="date and time"
+            required>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+        date and time is required
+              </mat-error>
+    </mat-form-field>
+    <mat-form-field class="field">
+      <input type="text" class="browser-default"  matInput
+       #venue
+        placeholder="Venue"
+         name="venue" [(ngModel)]="eventContent.venue"
+          required>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+        this field is required
+            </mat-error>
+    </mat-form-field>
+        <mat-form-field class="field">
+          <input type="text" class="browser-default"  matInput
+            #city
+              name="city" [(ngModel)]="eventContent.city"
+                placeholder="City"
+                   required>
+                    <mat-error *ngIf="emailFormControl.hasError('required')" >
+            the city is required
+                    </mat-error>
+        </mat-form-field>
+          <mat-form-field class="field">
+              <mat-select placeholder="country"
+               name="country"
+                [(ngModel)]="eventContent.country"
+                  >
+                    <mat-option *ngFor="let count of country"
+                   value="">
+                   <!-- {{count}} -->
+                   </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field class="field">
+              <input type="text" class="browser-default"  matInput #website  name="website"  placeholder="Website" >
+
+            </mat-form-field>
+
+            <div style="width:100%;height:4em;">
+              <button color="primary" type="submit" mat-raised-button class="green white-text" [disabled]="eventForm.form.invalid"  name="button">Submit For Approval </button>
+              <button color="accent" type="reset" mat-button class="red white-text" style="margin-left:20px;">Reset</button>
+            </div>
+
+  </mat-grid-list>
+  </form>
+</mat-card>
+</div>

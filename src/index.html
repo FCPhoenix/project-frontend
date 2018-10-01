@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="keywords" content="">
+  <title>Ste Tech</title>
+  <base href="/">
+
+  <!-- Bootstrap -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/rangeslider.css" rel="stylesheet">
+  <link rel="shortcut icon" href="assets/img/favicon.jpg" />
+
+  <script src="assets/js/jquery-1.12.3.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="assets/js/bootstrap.min.js"></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdaBPzmmZfk1asb1LdtS3B7oiUOyA06qo"></script>
+  <script src="assets/js/jquery.ui.map.js"></script>
+  <script src="assets/js/rangeslider.js"></script>
+</head>
+<body>
+  <app-root></app-root>
+  <script>
+    $(".close-gdpr").click(function (e) {
+      e.preventDefault();
+      $(".gdpr").fadeOut(150);
+    })
+
+  </script>
+
+  <script>
+    $(window).scroll(function () {
+      var scroll = $(window).scrollTop();
+      if (scroll >= 100) {
+        $(".go-up").addClass("active");
+      } else {
+        $(".go-up").removeClass("active");
+      }
+    });
+    $(".go-up").click(function (e) {
+      e.preventDefault();
+      $('html, body').animate({
+        scrollTop: 0
+      }, 700);
+    });
+    $(document).ready(function () {
+      // Update Data Animation
+      function updateData() {}
+      // Filters
+      if ($(window).width() >= 768) {
+        $(".filter").mouseenter(function () {
+          if (!$(this).hasClass("active")) {
+            $(this).children(".more").addClass("active");
+          }
+        }).mouseleave(function () {
+          if (!$(this).hasClass("active")) {
+            $(this).children(".more").removeClass("active");
+          }
+        })
+      } else {
+        $(".filter .toggler").click(function (e) {
+          if (!$(this).parents(".filter").hasClass("active")) {
+            e.preventDefault();
+            $(this).siblings(".more").toggleClass("active");
+            $(this).toggleClass("active");
+          }
+        })
+      }
+      // Switcher
+      $(".switcher a").click(function (e) {
+        e.preventDefault();
+        $(".switcher a").removeClass("active");
+        $(this).addClass("active");
+        updateData();
+      })
+      // Tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+      // Nice box Close
+      $(".nice-box .close-it").click(function (e) {
+        e.preventDefault();
+        $(this).parent(".nice-box").fadeOut(200);
+        $(".nice-box-overlay").fadeOut(200);
+        $("body").css("overflow", "visible");
+      })
+      // Events Register
+      $(".events .event .title, .events .event .image, .readmore").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        $(".nice-box").addClass("active");
+        $("body").css("overflow", "hidden");
+      })
+      // Event Map
+      $(".events .event").mouseenter(function () {
+        $(this).children(".image").children(".map-image").addClass('active');
+      }).mouseleave(function () {
+        $(this).children(".image").children(".map-image").removeClass('active');
+      })
+      for (var i = 1; i <= 12; i++) {
+        $("#map" + i).gmap({
+          'center': '26.119834,-80.269801',
+          'zoom': 17,
+          scrollwheel: false,
+          draggable: true,
+          'disableDefaultUI': true,
+          'callback': function () {
+            var self = this;
+            self.addMarker({
+              'position': this.get('map').getCenter()
+            }).click(function () {
+              self.openInfoWindow({
+                'content': '120 Jacarada Country Club Dr#208 Plantation,FL 33324'
+              }, this);
+            });
+          }
+        });
+      }
+      // Google Map
+      // var map = $("#google-map").gmap({
+      //   'center': '26.119834,-80.269801',
+      //   'zoom': 17,
+      //   scrollwheel: false,
+      //   draggable: true,
+      //   'disableDefaultUI': true,
+      //   'callback': function () {
+      //     var self = this;
+      //     self.addMarker({
+      //       'position': this.get('map').getCenter()
+      //     }).click(function () {
+      //       self.openInfoWindow({
+      //         'content': '120 Jacarada Country Club Dr#208 Plantation,FL 33324'
+      //       }, this);
+      //     });
+      //   }
+      // });
+      $(".inline-loading .buttons .btn-primary").click(function (e) {
+        e.preventDefault();
+        $(this).parent().siblings(".loading").fadeIn(200);
+      })
+      if ($(window).width() < 768) {
+        $(
+          ".navbar-inverse .navbar-nav > li.search input[type=submit], .navbar-inverse .navbar-header > .search input[type=submit]"
+        ).click(function (e) {
+          if ($(this).parent().parent().hasClass("active")) {
+            // Then submit form
+            return true;
+          } else {
+            $(this).parent().parent().addClass("active");
+            return false;
+          }
+        })
+        $(".close-form").click(function (e) {
+          e.preventDefault();
+          $(this).parent().parent().removeClass('active');
+        })
+      }
+      $(".sold-out").click(function (e) {
+        e.preventDefault();
+      });
+
+      $(document).click(function (e) {
+        var target = $(e.target),
+          article;
+        if (!target.parents().is(".custom-dropdown") && !target.is(".custom-dropdown")) {
+          if ($(".custom-dropdown").hasClass("active")) {
+            $(".custom-dropdown").removeClass("active");
+          }
+        }
+        if (!target.parents().is(".modal-box .box") && !target.is(".modal-box .box")) {
+          if ($(".modal-box").hasClass("active")) {
+            $(".modal-box").removeClass("active");
+            $("body").css("overflow-y", "scroll");
+          }
+        }
+        if (!target.parents().is(".nice-box .box") && !target.is(".nice-box .box")) {
+          if ($(".nice-box").hasClass("active")) {
+            $(".nice-box").removeClass("active");
+            $("body").css("overflow-y", "scroll");
+          }
+        }
+      });
+
+      $('a[data-toggle="custom-modal-box"]').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        var target = $(this).data("target");
+        $(".modal-box").removeClass("active");
+        $(target).addClass("active");
+        $("body").css("overflow-y", "hidden");
+      })
+
+    })
+    $(window).load(function () {
+      $(".events .loading").fadeOut(200);
+    })
+    $("#searchToggler").submit(function (e) {
+      e.preventDefault();
+      $(".whole-nav").addClass("active");
+    })
+    $(".whole-nav-close").click(function (e) {
+      e.preventDefault();
+      $(".whole-nav").removeClass("active");
+    })
+    $('[data-type="addfilter"]').click(function (e) {
+      e.preventDefault();
+      var option = $(this).text();
+      $(this).parents(".filter").addClass("active");
+      $(this).parents(".filter").find("span").text(option);
+      $(this).parents(".more").removeClass("active");
+      $(this).parents(".more").siblings(".toggler").removeClass("active");
+    });
+    $(".filter .toggler .remove").click(function (e) {
+      e.preventDefault();
+      var thistext = $(this).data('text');
+      $(this).parents(".filter").removeClass('active');
+      $(this).siblings("span").text(thistext);
+    })
+    $('#distanceInput').rangeslider({
+      // Feature detection the default is `true`.
+      // Set this to `false` if you want to use
+      // the polyfill also in Browsers which support
+      // the native <input type="range"> element.
+      polyfill: false,
+
+      // Default CSS classes
+      rangeClass: 'rangeslider',
+      disabledClass: 'rangeslider--disabled',
+      horizontalClass: 'rangeslider--horizontal',
+      verticalClass: 'rangeslider--vertical',
+      fillClass: 'rangeslider__fill',
+      handleClass: 'rangeslider__handle',
+
+      // Callback function
+      onInit: function () {},
+
+      // Callback function
+      onSlide: function (position, value) {
+        $("#distance").text(value + "km");
+      },
+
+      // Callback function
+      onSlideEnd: function (position, value) {
+        $("#distance").text(value + "km");
+      }
+    });
+    $(".filters-option .btn").click(function (e) {
+      e.preventDefault();
+      $(".top-filters").addClass("active");
+      $("body").css("overflow", "hidden");
+    })
+    $(".close-filters").click(function (e) {
+      e.preventDefault();
+      $(".top-filters").removeClass("active");
+      $("body").css("overflow", "visible");
+    })
+    $(".reset-filters").click(function (e) {
+      e.preventDefault();
+      $(".filter").each(function () {
+        var text = $(this).find(".remove").data("text");
+        $(this).find(".toggler span").text(text);
+        $(this).find(".toggler").removeClass("active");
+        $(this).find(".more").removeClass("active");
+        $(this).removeClass("active");
+      })
+    })
+
+  </script>
+
+</body>
+</html>
